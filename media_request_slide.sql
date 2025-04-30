@@ -32,7 +32,7 @@ CREATE TABLE public.media_request_slide (
   slide_number text,
   slide_url text,  -- storage path or URL
   
-  request_type public.media_request_slide_request_type_enum NOT NULL,
+  request_type public.media_request_slide_request_types NOT NULL,
   media uuid NOT NULL REFERENCES public.media(id) ON DELETE RESTRICT,
   media_title text NOT NULL,
   needs_voiceover boolean NOT NULL DEFAULT FALSE,
