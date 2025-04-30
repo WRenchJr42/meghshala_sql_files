@@ -65,38 +65,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- country_code table
-CREATE TABLE public.country_code (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  
-  country_id uuid NOT NULL REFERENCES public.country(id) ON DELETE RESTRICT,
-  
-  isd_code integer NOT NULL,
-  digits integer NOT NULL,
-  flag text NOT NULL,
-  
-  code text NOT NULL,  -- fetched from country.code
-  
-  created_at timestamp with time zone NOT NULL DEFAULT now(),
-  updated_at timestamp with time zone NOT NULL DEFAULT now(),
-  updated_by uuid references auth.users(id),
-	created_by uuid references auth.users(id) 
-);
-
--- Trigger: populate code before insert or update
-CREATE TRIGGER country_code_populate
-  BEFORE INSERT OR UPDATE ON public.country_code
-  FOR EACH ROW
-  EXECUTE FUNCTION public.country_code_populate_code();
-
--- Trigger: auto-update updated_at before any UPDATE
-CREATE TRIGGER country_code_set_updated_at
-  BEFORE UPDATE ON public.country_code
-  FOR EACH ROW
-  EXECUTE FUNCTION public.update_updated_at_column();
-
-);
-
 -- Trigger: auto-update updated_at on any UPDATE
 CREATE TRIGGER trg_user_profile_updated_at
   BEFORE UPDATE ON public.user_profile
