@@ -13,7 +13,7 @@ CREATE TABLE public.slide (
   lesson_id uuid NOT NULL REFERENCES public.lesson(id) ON DELETE CASCADE,
   
   page_id text, -- read‐only in the app
-  type public.slide_type_enum NOT NULL,
+  type public.slide_types NOT NULL,
   attachment text, -- storage path or URL
   video_id text, -- read‐only in the app
   
