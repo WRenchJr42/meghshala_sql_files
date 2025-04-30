@@ -1,7 +1,9 @@
-DROP TRIGGER IF EXISTS country_code_populate ON public.country_code;
-DROP FUNCTION IF EXISTS public.country_code_populate_code;
 
--- New table using the countries enum directly
+--DROP FUNCTION IF EXISTS public.country_code_populate_code;
+
+--DROP TABLE IF EXISTS public.country_code;
+
+-- Create the table using countries enum
 CREATE TABLE public.country_code (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
 
@@ -9,7 +11,7 @@ CREATE TABLE public.country_code (
 
   isd_code integer NOT NULL,
   digits integer NOT NULL,
-  flag text NOT NULL,          -- e.g., a URL or emoji
+  flag text NOT NULL,
 
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   updated_at timestamp with time zone NOT NULL DEFAULT now(),
@@ -17,7 +19,7 @@ CREATE TABLE public.country_code (
   created_by uuid references auth.users(id)
 );
 
--- Trigger function to auto-update updated_at
+-- Create trigger function to auto-update updated_at
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -26,7 +28,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger to set updated_at on update
+-- Now that the table exists, create the trigger
 CREATE TRIGGER country_code_set_updated_at
   BEFORE UPDATE ON public.country_code
   FOR EACH ROW
