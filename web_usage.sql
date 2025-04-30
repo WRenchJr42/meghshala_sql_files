@@ -9,10 +9,8 @@ CREATE TABLE public.web_usage (
   -- Meta fields
   created_at timestamp with time zone DEFAULT now(),
   updated_at timestamp with time zone DEFAULT now(),
-  updated_by uuid references auth.users(id),
-	created_by uuid references auth.users(id), 
-  created_by text DEFAULT 'ADMINISTRATOR',
-  modified_by text DEFAULT 'ADMINISTRATOR'
+  updated_by uuid references auth.users(id) DEFAULT 'ADMINISTRATOR',
+  created_by uuid references auth.users(id) DEFAULT 'ADMINISTRATOR'
 );
 CREATE OR REPLACE FUNCTION public.update_web_usage_updated_at()
 RETURNS TRIGGER AS $$
