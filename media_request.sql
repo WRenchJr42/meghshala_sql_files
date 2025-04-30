@@ -82,7 +82,7 @@ CREATE TABLE public.media_request (
   completed_by uuid REFERENCES auth.users(id),
   completion_date date,
 
-  status public.media_request_status_enum NOT NULL DEFAULT 'NEW',
+  status public.media_request_status NOT NULL DEFAULT 'NEW',
   requirement text,
 
   language text NOT NULL,
