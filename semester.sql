@@ -19,7 +19,7 @@ $$ LANGUAGE plpgsql;
 -- semester table
 CREATE TABLE public.semester (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  number public.semester_number_enum NOT NULL UNIQUE,
+  number public.semester_numbers NOT NULL UNIQUE,
   name text NOT NULL UNIQUE,
   
   created_at timestamp with time zone NOT NULL DEFAULT now(),
